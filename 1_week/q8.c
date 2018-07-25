@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int getInt() {
+int getInt(int * err) {
     // ...
     return 0;
 }
