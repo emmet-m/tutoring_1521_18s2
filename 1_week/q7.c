@@ -10,6 +10,7 @@ int main (int argc, char * argv[], char * env[]) {
     (void) n;
 
     // How can we deal with errors from the above function?
+    //
 
     printf("%s", strerror(errno));
 
