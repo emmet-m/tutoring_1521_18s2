@@ -1,2 +1,2 @@
 all: 
-	gcc -Wall -Werror -o brackets q3.c Stack.c
+	gcc -Wall -Werror -c Stack.c

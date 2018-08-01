@@ -5,8 +5,26 @@
 
 
 void initStack(Stack *s){
-    s->top = 0;
+    // FIXME
 }
+
+int isEmptyStack(Stack s){
+    // FIXME
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int pushStack(Stack *s, Item val){
     if (s->top == MAX_STACK) {
@@ -20,10 +38,6 @@ int pushStack(Stack *s, Item val){
 
 Item popStack(Stack *s){
     return s->items[(s->top--) - 1];
-}
-
-int isEmptyStack(Stack s){
-    return (s.top == 0);
 }
 
 void showStack(Stack s){
