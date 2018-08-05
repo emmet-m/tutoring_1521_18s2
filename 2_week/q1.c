@@ -8,5 +8,7 @@ int main()
     char s[LIFE];
     int  i = woof(5);
     i = VAL;
-    return (sq(i) > LIFE) ? 1 : 0;
+    // What happens to the below sq() statement?
+    // Compile with `gcc -E q1.c` to find out!
+    return (sq(i++) > LIFE) ? 1 : 0;
 }
