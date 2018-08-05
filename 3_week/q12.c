@@ -8,7 +8,7 @@ int main(void)
     int y = 200;
     char z = 0;
 
-    strcpy(s, "a long name asd");
+    strcpy(s, "a long name");
 
     printf("%s\n", s);
     printf("0x%p 0x%p 0x%p\n", &x, s, &y);
