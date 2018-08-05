@@ -8,5 +8,5 @@ int main()
     char s[LIFE];
     int  i = woof(5);
     i = VAL;
-    return (sq(i) > LIFE) ? 1 : 0;
+    return (sq(i++) > LIFE) ? 1 : 0;
 }
