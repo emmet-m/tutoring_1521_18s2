@@ -27,9 +27,9 @@ int main (void) {
 
     var.sign = 1;
     var.value = 10;
-    // TODO
-    //display_int(&var);
-    //display_int(&var);
+
+    display_int(&var);
+    display_int(&var);
 
     return 0;
 }
