@@ -29,7 +29,6 @@ int main (void) {
     var.value = 10;
 
     display_int(&var);
-    display_int(&var);
 
     return 0;
 }
