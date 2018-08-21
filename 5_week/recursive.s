@@ -71,14 +71,68 @@ end_load_loop:
 
 # Destroys $t_ registers
 recursive_max:
+    # Gotta push $ra and $fp onto the stack
+    # Save our old $fp 
+    sw    $fp, -4($sp)
+    # Load the new bottom of our frame in
+    la    $fp, -4($sp) 
+    # Save our current return address
+    sw    $ra, -8($sp) 
 
-    # TODO
+    # We need variables to keep on the stack
+    sw    $s0, -12($sp) 
+    sw    $s1, -16($sp) 
+    sw    $s2, -20($sp) 
+
+    # Update the top of our stack!
+    addi  $sp, -24
+
+    # Now, we need to keep track of our current
+    #  position in the array...
+    move $s0, $a0 # Array pointer
+
+base_case:
+    li  $t0, 1
+    bgt $a1, $t0, recursive_case # Move to recursive case if not at end of array
+    
+    # End of array, take element at a[0]
+    lw $v0, ($a0)
+    j recursive_max_end
+
+recursive_case:
+    # Save element at current state, decrement and recurse
+    lw   $s0, ($a0)
+
+    addi $a0, 4  # Move along 4 bytes 
+    addi $a1, -1 # Decrease remaining length
+
+    jal recursive_max # Recurse
+
+    # Check if currently returned is bigger than current level
+    blt  $s0, $v0, recursive_max_end
+    nop
+
+    # Copy current element across
+    move $v0, $s0
+
+recursive_max_end:
+
+    # Restore old variables
+    lw    $s2, -16($fp) 
+    lw    $s1, -12($fp) 
+    lw    $s0, -8($fp) 
+
+    # Save our current return address
+    lw    $ra, -4($fp) 
+
+    # Restore old $sp
+    la    $sp, 4($fp)
+
+    # Restore old $fp
+    lw    $fp, ($fp)
 
     # Return
     j $ra
-
-
-
 
 # Destroys $t_ registers
 print_array:
