@@ -1,8 +1,8 @@
     .data
 spc:
     .asciiz " "
-debug:
-    .asciiz "\nDEBUG\n"
+nwln:
+    .asciiz "\n"
 size:
     .word  10
 ar: .space 40
@@ -30,7 +30,11 @@ load_loop:
     j load_loop
 
 end_load_loop:
-    # Do stuff
+    # Now our array has the number [0..9] in it
+
+    # TODO: Test with this
+    #li $t9, 100
+    #sw $t9, ar+4
 
     # We're about to jump, save $ra
     move $s0, $ra
@@ -38,9 +42,25 @@ end_load_loop:
     jal print_array
 
     # Now.... recursive max!
-
+    # Arguments: $a0 = ar, $a1 = array
+    la  $a0, ar
+    lw  $a1, size 
     jal recursive_max
 
+    # Postcondition: $v0 contains the max integer
+    move $t0, $v0
+
+    la $a0, nwln
+    li $v0, 4 #print newline
+    syscall
+
+    move $a0, $t0 # Int to print
+    li $v0, 1
+    syscall # Print our int!
+
+    la $a0, nwln
+    li $v0, 4 #print newline
+    syscall
 
     move $ra, $s0
 
@@ -52,7 +72,13 @@ end_load_loop:
 # Destroys $t_ registers
 recursive_max:
 
+    # TODO
+
+    # Return
     j $ra
+
+
+
 
 # Destroys $t_ registers
 print_array:
