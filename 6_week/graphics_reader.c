@@ -19,16 +19,15 @@ int main (void) {
     Graphics * g;
 
     // TODO ... Corresponding open() call?
-    int f = -1;
+    int f = open("graphics_bytes", O_RDONLY);
 
     // TODO: Check for errors?
-    if (0) {
+    if (f < 0) {
         fprintf(stderr, "Error opening file\n");
         return 1;
     }
 
-    // TODO: Fix this
-    while (0) {
+    while ((g = read_graphic(f)) != NULL) {
         // Doddgeeeeee... Works?
         printf("(%d,%d) ::"
                 " %x,%x,%x\n", g->x, g->y,
@@ -46,10 +45,12 @@ int main (void) {
 Graphics * read_graphic(int fd) {
     Graphics * g = malloc(sizeof(Graphics));
 
-    if (read(fd, g, sizeof(Graphics)) < sizeof(Graphics)) {
+    int amount = read(fd, g, sizeof(Graphics));
+
+    if (amount != sizeof(Graphics)) {
         free(g);
         return NULL;
     }
-
+    
     return g;
 }
