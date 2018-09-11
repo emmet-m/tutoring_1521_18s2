@@ -9,13 +9,6 @@ void ignore(int sig) {
     printf("Weeeeeeee what segfault!\n");
 }
 
-
-
-
-
-
-
-
 // Signal handling!
 void handler(int sig)
 {
@@ -37,16 +30,10 @@ int main(int argc, char *argv[])
     sigaction(SIGKILL, &act, NULL); // Set the handler for kill
 
     // Wait forever
-    // while (1) sleep(5);
+    printf("Gonna wait just a bit....\n");
+    while (1) sleep(5);
 
-
-
-
-
-
-
-
-    // Ignore signal
+    // Ignore a segfault
     struct sigaction ign;
     memset (&ign, 0, sizeof(act));
     ign.sa_handler = &ignore;
