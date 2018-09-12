@@ -12,14 +12,15 @@ int main(void)
         fprintf(stderr, "Fork failed\n"); 
         exit(1);
     }
-    else if (pid > 0) {
+
+    if (pid > 0) {
         // Who prints this?
         x++;  
-        printf("x = %d\n", x);
+        printf("x = %d\n", pid);
     } else { 
         // Who prints this?
         x--;  
-        printf("x = %d\n", x);
+        printf("x = %d\n", getppid());
     }
 
     return 0;

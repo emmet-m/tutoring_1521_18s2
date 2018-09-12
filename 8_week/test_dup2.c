@@ -15,6 +15,7 @@ int main(int argc, char * argv[], char * envp[])
     }
 
     // How to redirect this to a file?
+    dup2(fd, 1);
 
     printf("Testing!\n");
     return 0;

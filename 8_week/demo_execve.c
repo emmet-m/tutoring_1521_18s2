@@ -4,7 +4,7 @@
 
 int main(int argc, char * argv[], char * envp[])
 {
-    execve("/bin/cat", argv, NULL);
+    execve("cat", argv, NULL);
     
     printf("Execve failed!\n");
 

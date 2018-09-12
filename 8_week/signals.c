@@ -13,7 +13,6 @@ void ignore(int sig) {
 void handler(int sig)
 {
     printf("Quitting...\n");
-    exit(0);
 }
 
 int main(int argc, char *argv[])
@@ -31,7 +30,8 @@ int main(int argc, char *argv[])
 
     // Wait forever
     printf("Gonna wait just a bit....\n");
-    while (1) sleep(5);
+//    while (1) sleep(5);
+
 
     // Ignore a segfault
     struct sigaction ign;
