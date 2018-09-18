@@ -36,7 +36,7 @@ int main(void)
             delay(100000);
         }
     }
-    sem_destroy(lock);
+    sem_close(lock);
     return 0;
 }
 
