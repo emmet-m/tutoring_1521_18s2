@@ -28,6 +28,12 @@ void fatal(const char *msg)
  
 int main(int argc, char *argv[])
 {
+    // Example usage:
+    //
+    //  ./socket_example "google.com" "/" "80"
+    //
+    //  Make sure there's a server running on localhost:8080 (or change the URL/port)
+    //
 
     /*
      *
@@ -41,7 +47,7 @@ int main(int argc, char *argv[])
     // The Port Number uniquely identifies a process on the other end
     //  for us to connect to. The default for HTTP (almost all websites)
     //  is 80. SSH uses 22, for example
-    //int portno;
+    int portno = atoi(argv[2]);
     // used as a counter
     int n;
 
@@ -51,8 +57,8 @@ int main(int argc, char *argv[])
     struct hostent *server;
  
     // Provide a URL to look up
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s URL\n", argv[0]);
+    if (argc < 4) {
+        fprintf(stderr, "Usage: %s HOST PORT ROUTE\n", argv[0]);
         exit(1);
     }
 
@@ -66,9 +72,9 @@ int main(int argc, char *argv[])
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) fatal("ERROR socket");
 
-    // Look up the server that goes by the name 'localhost'
+    // Look up the server that goes by the provided hostname
     //      See 'man 3 gethostbyname'
-    server = gethostbyname("google.com");
+    server = gethostbyname(argv[1]);
     if (server == NULL) fatal("ERROR gethost");
 
     // Clear the serv_addr struct
@@ -82,9 +88,9 @@ int main(int argc, char *argv[])
           (char *)&serv_addr.sin_addr.s_addr,
           server->h_length);
 
-    // Set the port to 8080, in the byte order (endianness) used by the network.
+    // Set the port to provided port number, in the byte order (endianness) used by the network.
     //      See 'man 3 htons'
-    serv_addr.sin_port = htons(8080);
+    serv_addr.sin_port = htons(portno);
 
     // Let's actually attempt to contact the server!
     // Connect our opened (but idle) socket to the address provided in 
@@ -95,14 +101,16 @@ int main(int argc, char *argv[])
 
     /*
      *
-     * Part (2)
+     * Part (2) - Send a request to server
      *
      */
 
     // A HTTP format header. Google the protocol for more info!
-    char *reqFmt = "GET %s HTTP/1.1\r\nHost: 127.0.0.1/\r\n\r\n";
+    char *reqFmt = "GET %s HTTP/1.1\r\nHost: %s/\r\n\r\n";
     // Write the route in argv[1] to our format string
-    sprintf(buffer, reqFmt, argv[1]);
+    sprintf(buffer, reqFmt, argv[3], argv[1]);
+
+    puts(buffer);
 
     // Write to our socket descriptor, i.e. send information. Like a file!
     n = write(sockfd,buffer,strlen(buffer));
