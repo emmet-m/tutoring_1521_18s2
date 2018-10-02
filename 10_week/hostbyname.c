@@ -30,15 +30,15 @@ int main (int argc, char * argv[]) {
        */
 
     // Now extract the address
-    
+
+    struct in_addr * ip = (struct in_addr *) res->h_addr_list[0];
+    char * addr = inet_ntoa(*ip);
+
     /*
      struct in_addr {
          unsigned long s_addr;  // load with inet_aton()
      };
      */
-
-    struct in_addr * ip = (struct in_addr *) res->h_addr_list[0];
-    char * addr = inet_ntoa(*ip);
 
     printf("Host: %s\n"
            "Has aliases: %s\n"
