@@ -37,11 +37,8 @@ int main (int argc, char * argv[]) {
      };
      */
 
-    struct in_addr ip;
-    memset(&ip, 0, sizeof(struct in_addr));
-    memcpy(&ip, &res->h_addr_list[0], res->h_length);
-
-    char * addr = inet_ntoa(ip);
+    struct in_addr * ip = (struct in_addr *) res->h_addr_list[0];
+    char * addr = inet_ntoa(*ip);
 
     printf("Host: %s\n"
            "Has aliases: %s\n"
