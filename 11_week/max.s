@@ -33,7 +33,7 @@ main:
 	addi  $sp, $sp, -8
 
 	la    $a0, items
-	la    $a1, NITEMS
+	lw    $a1, NITEMS
 	jal   max           # max(items, NITEMS)
 	move  $s0, $v0      # tmp = max()
 	la    $a0, msg
@@ -52,6 +52,7 @@ main:
 	lw    $ra, -4($fp)
 	la    $sp, 4($fp)
 	lw    $fp, ($fp)
+    jr    $ra
 
 
 ## int max(int a[], int n)
@@ -92,6 +93,7 @@ max_for:
 	move  $s3, $t0      # big = a[i]
 
 max_cont:
+    addi $s2, $s2, 1
 	j     max_for
 
 end_max_for:

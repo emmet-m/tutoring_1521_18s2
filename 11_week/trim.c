@@ -36,12 +36,12 @@ void trim(char *str)
    while (isspace(str[first])) first++;
    
    // Find location of last nonspace
-   last  = strlen(str);
-   while (isspace(str[last])) last++;
+   last  = strlen(str) - 1;
+   while (isspace(str[last])) last--;
 
    // Shift the array down
    int i, j = 0;
-   for (i = first; i < last; i++) str[j] = str[i];
+   for (i = first; i <= last; i++) str[j++] = str[i];
    str[j] = '\0';
 }
 
