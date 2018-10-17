@@ -25,29 +25,22 @@ typedef struct _students {
 // build a collection of student records from a file descriptor
 Students getStudents(int in)
 {
-    // INitialise counter and create temporary sturec struct
-    int size = 0;
-    struct _stu_rec tmpStu;
-    // Count amount of sturecs in file specified by 'in'
-    // until there's no more studetns to read.
-    while (read(in, &tmpStu, sizeof(struct _stu_rec)) == sizeof(struct _stu_rec)){
-        size++;
-    }
+    // INnitialise struct
+    students_t * recs = malloc(sizeof(students_t));
 
-    // Reset file offset to start
+    // Count amount of students
+    recs->nstu = lseek(in, 0, SEEK_END)/sizeof(sturec_t);
+
+    // Create array of students
+    recs->recs = malloc(sizeof(sturec_t)*recs->nstu);
+
+    // Move back to start of file
     lseek(in, 0, SEEK_SET);
 
-    // malloc amount of student records required
-    // inside a students struct
-    struct _students * stus = malloc(sizeof(struct _students));
-    stus->nstu = size;
-    stus->recs = malloc(sizeof(struct _stu_rec)*size);
+    // Read into array
+    read(in, recs->recs, sizeof(sturec_t)*recs->nstu);
 
-    // Fill in the sturecs inside the student struct
-    int i = 0;
-    read(in, stus->recs, size*sizeof(struct _stu_rec));
-
-	return stus;  
+    return recs;
 }
 
 // show a list of student records pointed to by ss
